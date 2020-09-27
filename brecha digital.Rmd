@@ -1,0 +1,83 @@
+
+
+```{r}
+library(rio)
+lk='https://github.com/ALEJANDRODELAGUILA/TRABAJO-ESTADISTICA/raw/master/BRECHA%20DIGITAL%20(%20data%20sucia).xls'
+
+DIGITAL= import(lk)
+
+```
+
+*eliminar columnas*
+```{r}
+DIGITAL[,c(2:5)]=NULL
+
+```
+
+```{r}
+DIGITAL[,c(5:6)]=NULL
+```
+
+```{r}
+DIGITAL$...7=NULL
+```
+
+```{r}
+names(DIGITAL)=c('Country','Male','Female')
+```
+
+```{r}
+DIGITAL$Male=gsub('Gender',NA,DIGITAL$Male)
+DIGITAL$Male=gsub('Male',NA,DIGITAL$Male)
+```
+
+
+```{r}
+DIGITAL$Female=gsub('Female',NA,DIGITAL$Female)
+```
+
+
+```{r}
+DIGITAL=na.omit(DIGITAL)
+```
+
+```{r}
+str(DIGITAL)
+```
+
+```{r}
+DIGITAL[,-1]=lapply(DIGITAL[,-1],as.numeric)
+```
+
+```{r}
+str(DIGITAL)
+```
+ahora como quedaron valores perdidos vamos a eliminarlos:
+```{r}
+DIGITAL=na.omit(DIGITAL)
+```
+
+
+Ahora quedan algunos nombres para cambiar
+```{r}
+DIGITAL$Country[11]="Bolivia"
+DIGITAL$Country[40]="Hong Kong"
+DIGITAL$Country[44]="Iran"
+DIGITAL$Country[51]="Korea"
+DIGITAL$Country[57]="Macao"
+DIGITAL$Country[83]="Russia"
+DIGITAL$Country[93]="Taiwan"
+
+```
+
+
+```{r}
+write.csv(DIGITAL,"Brecha digital genero.csv",row.names = F)
+```
+
+write.csv(datos, "nombre que le quieres poner.csv")
+
+
+
+
+
