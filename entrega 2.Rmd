@@ -1,0 +1,90 @@
+
+```{r}
+library(rio)
+lkCSV="https://github.com/Natalia-Aquize/Trabajo-de-Estad-stica./raw/master/DP_LIVE_11102020010517891.csv"
+ingresos=import(lkCSV)
+```
+
+```{r}
+ingresos1=import(lkCSV)
+ingresos2=import(lkCSV)
+ingresos3=import(lkCSV)
+ingresos4=import(lkCSV)
+
+```
+Se eliminan las columnas que no se usarán
+```{r}
+ingresos1[,c(2,3,4,5,8)]=NULL
+ingresos2[,c(2,3,4,5,8)]=NULL
+ingresos3[,c(2,3,4,5,8)]=NULL
+ingresos4[,c(2,3,4,5,8)]=NULL
+
+```
+
+```{r}
+ingresos1$TIME=gsub("2013", NA, ingresos1$TIME)
+ingresos1$TIME=gsub("2014", NA, ingresos1$TIME)
+ingresos1$TIME=gsub("2015", NA, ingresos1$TIME)
+```
+
+```{r}
+ingresos2$TIME=gsub("2012", NA, ingresos2$TIME)
+ingresos2$TIME=gsub("2014", NA, ingresos2$TIME)
+ingresos2$TIME=gsub("2015", NA, ingresos2$TIME)
+```
+
+```{r}
+ingresos3$TIME=gsub("2012", NA, ingresos3$TIME)
+ingresos3$TIME=gsub("2013", NA, ingresos3$TIME)
+ingresos3$TIME=gsub("2015", NA, ingresos3$TIME)
+```
+
+```{r}
+ingresos4$TIME=gsub("2012", NA, ingresos4$TIME)
+ingresos4$TIME=gsub("2013", NA, ingresos4$TIME)
+ingresos4$TIME=gsub("2014", NA, ingresos4$TIME)
+```
+Borrando los NAs
+```{r}
+ingresos1=na.omit(ingresos1)
+ingresos2=na.omit(ingresos2)
+ingresos3=na.omit(ingresos3)
+ingresos4=na.omit(ingresos4)
+```
+
+```{r}
+ingresos1$TIME=NULL
+ingresos2$TIME=NULL
+ingresos3$TIME=NULL
+ingresos4$TIME=NULL
+```
+
+```{r}
+
+names(ingresos1)= c("País","Data 2012")
+names(ingresos2)= c("País","Data 2013")
+names(ingresos3)= c("País","Data 2014")
+names(ingresos4)= c("País","Data 2015")
+```
+Merge
+
+```{r}
+i1i2=merge(ingresos1,ingresos2,all.x=T,all.y=T)
+head(i1i2)
+
+i1i2i3=merge(i1i2,ingresos3,all.x=T,all.y=T)
+head(i1i2i3)
+
+i1i2i3i4=merge(i1i2i3,ingresos4,all.x=T,all.y=T)
+head(i1i2i3i4)
+
+```
+
+```{r}
+i1i2i3i4=na.omit(i1i2i3i4)
+```
+
+```{r}
+write.csv(i1i2i3i4, "ingresos.csv", row.names=F)
+```
+
